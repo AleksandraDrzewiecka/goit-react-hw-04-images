@@ -1,0 +1,18 @@
+.background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal {
+    max-width: calc(100vw - 50px);
+    max-height: calc(100vh - 25px);
+}
