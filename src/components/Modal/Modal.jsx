@@ -1,37 +1,33 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
 import styles from './Modal.module.css';
 import PropTypes from 'prop-types';
 
-export class Modal extends Component {
-  static propTypes = {
-    bigPhotoUrl: PropTypes.string.isRequired,
-    tags: PropTypes.array,
-    closeModal: PropTypes.func.isRequired,
-    isModalVisable: PropTypes.bool.isRequired,
-  };
+export const Modal = ({ bigPhotoUrl, tags, closeModal, isModalVisable }) => {
+  useEffect(() => {
+    window.addEventListener('keydown', closeModal);
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.props.closeModal);
-  }
+    return () => {
+      window.removeEventListener('keydown', closeModal);
+    };
+  }, [closeModal]);
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.props.closeModal);
-  }
+  return (
+    isModalVisable && (
+      <div className={styles.background}>
+        <img
+          className={styles.modal}
+          src={bigPhotoUrl}
+          alt={tags}
+          onClick={closeModal}
+        />
+      </div>
+    )
+  );
+};
 
-  render() {
-    const { bigPhotoUrl, tags, closeModal, isModalVisable } = this.props;
-
-    return (
-      isModalVisable && (
-        <div className={styles.background}>
-          <img
-            className={styles.modal}
-            src={bigPhotoUrl}
-            alt={tags}
-            onClick={closeModal}
-          />
-        </div>
-      )
-    );
-  }
-}
+Modal.propTypes = {
+  bigPhotoUrl: PropTypes.string.isRequired,
+  tags: PropTypes.array,
+  closeModal: PropTypes.func.isRequired,
+  isModalVisable: PropTypes.bool.isRequired,
+};

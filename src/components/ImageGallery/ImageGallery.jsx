@@ -1,26 +1,28 @@
-import { Component } from 'react';
 import styles from './ImageGallery.module.css';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 
-export class ImageGallery extends Component {
-  static propTypes = {
-    close: PropTypes.func.isRequired,
-    children: PropTypes.node,
-    isModalVisable: PropTypes.bool,
-  };
+function ImageGallery({ close, children }) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  render() {
-    const { children, close, isModalVisable } = this.props;
-    return (
-      <>
-        {isModalVisable ? (
-          <ul className={styles.imagesContainer} onClick={close}>
-            {children}
-          </ul>
-        ) : (
-          <ul className={styles.imagesContainer}>{children}</ul>
-        )}
-      </>
-    );
-  }
+  return (
+    <>
+      {isModalVisible ? (
+        <ul className={styles.imagesContainer} onClick={() => setIsModalVisible(false)}>
+          {children}
+        </ul>
+      ) : (
+        <ul className={styles.imagesContainer} onClick={() => setIsModalVisible(true)}>
+          {children}
+        </ul>
+      )}
+    </>
+  );
 }
+
+ImageGallery.propTypes = {
+  close: PropTypes.func.isRequired,
+  children: PropTypes.node,
+};
+
+export default ImageGallery;
